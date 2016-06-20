@@ -35,10 +35,10 @@ function addHTML(data, email) {
 }
 
 function buildEmailDiv(email, emailTitle) {
-  $div = $("<div>", {id: email});
+  $div = $("<div>", {id: email, class: "collapse"});
   $emailTitle = $("<h1>", {text: emailTitle});
-  $div.append($emailTitle);
-  $("#body").append($div);
+  $button = $("<button>", {class: "btn btn-info", text: "Show breached sites", "data-toggle": "collapse", "data-target": "#"+email})
+  $("#body").append($emailTitle, $div, $button);
 }
 
 function buildScaffoldFor(website, domain, email) {
