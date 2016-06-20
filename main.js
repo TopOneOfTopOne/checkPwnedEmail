@@ -5,7 +5,11 @@ $.ajax({
 
 }).done(handleRes)
   .fail(function(){alert("Failed")});
-
+$("#execute-btn").click(function() {
+  var emails = $("#user-input").val();
+  var emailsArr = emails.split(/[.,\/ -]/);
+  alert(JSON.stringify(emailsArr))
+})
 function handleRes(data) {
   $.each(data, function(_, obj) {
     var name = obj.Name;
