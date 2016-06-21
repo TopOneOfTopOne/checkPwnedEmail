@@ -14,7 +14,10 @@ function checkEmails(emailsArr) {
     $.ajax({
       url: url
     }).done(function(json){addHTML(json, email)})
-      .fail(function(){alert("Failed for "+email)});
+      .fail(function(jqXHR){
+        if (jqXHR.status == 404) displayClean(email);
+        else alert("Failed for "+email);
+      });
   })
 }
 
@@ -32,6 +35,11 @@ function addHTML(data, email) {
       }
     })
   })
+}
+
+function displayClean(email){
+  $emailTitle = $("<h1>", {text: email, class: "clean-email-title"});
+  $("#body").append($emailTitle);
 }
 
 function buildEmailDiv(email, emailTitle) {
