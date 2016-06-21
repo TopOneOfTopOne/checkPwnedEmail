@@ -8,20 +8,40 @@ $("#execute-btn").click(function() {
 })
 
 function checkEmails(emailsArr) {
+  var numBreached = 0;
+  var numClean = 0;
   $.each(emailsArr, function(_, email) {
-    var data;
-    var url = "https://haveibeenpwned.com/api/v2/breachedaccount/"+email
     $.ajax({
-      url: url
-    }).done(function(json){addHTML(json, email)})
-      .fail(function(){alert("Failed for "+email)});
-  })
+      url: "https://haveibeenpwned.com/api/v2/breachedaccount/"+email,
+      success: function(json){
+        addHTML(json, email);
+        numBreached++;},
+
+    }).done()
+      .fail(function(jqXHR){
+        if (jqXHR.status == 404) {
+          displayClean(email);
+          numClean++;
+        }
+        else alert("Failed for "+email);
+      });
+  });
+  setTimeout(function() {
+    displayNumbers(numBreached, numClean);
+  }, 2000);
+}
+
+
+function displayNumbers(numBreached, numClean) {
+  $numBreached = $("<small>", {text: "Breached: "+numBreached, class: "breached-color"});
+  $numClean = $("<small>", {text: "Clean: "+numClean, class: "clean-color"});
+  $("#title-for-output").append(" ", $numBreached, " ", $numClean);
 }
 
 function addHTML(data, email) {
   var emailTitle = email;
   email = email.replace(/[\.\@\#]/g,"");
-  buildEmailDiv(email, emailTitle);
+  buildEmailItem(email, emailTitle);
   $.each(data, function(_, obj) {
     var website = obj.Name;
     buildScaffoldFor(website, obj.Domain, email);
@@ -34,19 +54,26 @@ function addHTML(data, email) {
   })
 }
 
-function buildEmailDiv(email, emailTitle) {
-  $div = $("<div>", {id: email, class: "collapse"});
-  $emailTitle = $("<h1>", {text: emailTitle});
-  $button = $("<button>", {class: "btn btn-info", text: "Show breached sites", "data-toggle": "collapse", "data-target": "#"+email})
-  $("#body").append($emailTitle, $div, $button);
+function displayClean(email){
+  $parent = $("<a>", {class: "list-group-item disabled"});
+  $emailTitle = $("<h4>", {text: email, class: "clean-color"});
+  $parent.append($emailTitle);
+  $("#inject-here").append($parent);
+}
+
+function buildEmailItem(email, emailTitle) {
+  $parent = $("<a>", {"data-toggle": "collapse", "data-target": "#"+email, class: "list-group-item"});
+  $emailTitle = $("<h4>", {text: emailTitle, class: "breached-color"});
+  $div = $("<ul>", {id: email, class: "collapse list-group"});
+  $parent.append($emailTitle, $div);
+  $("#inject-here").append($parent);
 }
 
 function buildScaffoldFor(website, domain, email) {
-  $div = $("<div>", {class: "panel panel-default panel-body " + website});
-  $title = $("<h2>", {class: "Title"});
-  $domain = $("<a>", {href: domain})
-  $count = $("<p>", {class: "PwnCount", text: "# Breached accounts: ", id: "numBreach"});
+  $listItem = $("<li>", {class: "list-group-item " + website})
+  $title = $("<a>", {class: "Title", href: "http://"+domain, target: "_blank"});
+  $count = $("<p>", {class: "PwnCount num-breach", text: "# Breached accounts: "});
   $description = $("<p>", {class: "Description"});
-  $div.append($title.append($domain), $count, $description);
-  $("#"+email).append($div);
+  $listItem.append($title, $count, $description);
+  $("#"+email).append($listItem);
 }
