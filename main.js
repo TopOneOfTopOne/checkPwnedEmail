@@ -38,8 +38,10 @@ function addHTML(data, email) {
 }
 
 function displayClean(email){
-  $emailTitle = $("<h1>", {text: email, class: "clean-email-title"});
-  $("#body").append($emailTitle);
+  $parent = $("<a>", {class: "list-group-item disabled"});
+  $emailTitle = $("<h4>", {text: email, class: "clean-email-title"});
+  $parent.append($emailTitle);
+  $("#inject-here").append($parent);
 }
 
 function buildEmailItem(email, emailTitle) {
