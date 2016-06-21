@@ -44,7 +44,7 @@ function displayClean(email){
 
 function buildEmailDiv(email, emailTitle) {
   $div = $("<div>", {id: email, class: "collapse"});
-  $emailTitle = $("<h1>", {text: emailTitle});
+  $emailTitle = $("<h1>", {text: emailTitle, class: "breached-email-title"});
   $button = $("<button>", {class: "btn btn-info", text: "Show breached sites", "data-toggle": "collapse", "data-target": "#"+email})
   $("#body").append($emailTitle, $div, $button);
 }
@@ -53,7 +53,7 @@ function buildScaffoldFor(website, domain, email) {
   $div = $("<div>", {class: "panel panel-default panel-body " + website});
   $title = $("<h2>", {class: "Title"});
   $domain = $("<a>", {href: domain})
-  $count = $("<p>", {class: "PwnCount", text: "# Breached accounts: ", id: "numBreach"});
+  $count = $("<p>", {class: "PwnCount num-breach", text: "# Breached accounts: "});
   $description = $("<p>", {class: "Description"});
   $div.append($title.append($domain), $count, $description);
   $("#"+email).append($div);

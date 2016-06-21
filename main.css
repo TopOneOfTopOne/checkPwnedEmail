@@ -1,7 +1,11 @@
-#numBreach {
+.num-breach {
   color: red;
 }
 
 .clean-email-title {
   color: green;
+}
+
+.breached-email-title {
+  color:red
 }
