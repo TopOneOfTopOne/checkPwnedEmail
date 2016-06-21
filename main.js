@@ -8,17 +8,34 @@ $("#execute-btn").click(function() {
 })
 
 function checkEmails(emailsArr) {
+  var numBreached = 0;
+  var numClean = 0;
   $.each(emailsArr, function(_, email) {
-    var data;
-    var url = "https://haveibeenpwned.com/api/v2/breachedaccount/"+email
     $.ajax({
-      url: url
-    }).done(function(json){addHTML(json, email)})
+      url: "https://haveibeenpwned.com/api/v2/breachedaccount/"+email,
+      success: function(json){
+        addHTML(json, email);
+        numBreached++;},
+
+    }).done()
       .fail(function(jqXHR){
-        if (jqXHR.status == 404) displayClean(email);
+        if (jqXHR.status == 404) {
+          displayClean(email);
+          numClean++;
+        }
         else alert("Failed for "+email);
       });
-  })
+  });
+  setTimeout(function() {
+    displayNumbers(numBreached, numClean);
+  }, 2000);
+}
+
+
+function displayNumbers(numBreached, numClean) {
+  $numBreached = $("<small>", {text: "Breached: "+numBreached, class: "breached-color"});
+  $numClean = $("<small>", {text: "Clean: "+numClean, class: "clean-color"});
+  $("#title-for-output").append(" ", $numBreached, " ", $numClean);
 }
 
 function addHTML(data, email) {
@@ -39,14 +56,14 @@ function addHTML(data, email) {
 
 function displayClean(email){
   $parent = $("<a>", {class: "list-group-item disabled"});
-  $emailTitle = $("<h4>", {text: email, class: "clean-email-title"});
+  $emailTitle = $("<h4>", {text: email, class: "clean-color"});
   $parent.append($emailTitle);
   $("#inject-here").append($parent);
 }
 
 function buildEmailItem(email, emailTitle) {
   $parent = $("<a>", {"data-toggle": "collapse", "data-target": "#"+email, class: "list-group-item"});
-  $emailTitle = $("<h4>", {text: emailTitle, class: "breached-email-title"});
+  $emailTitle = $("<h4>", {text: emailTitle, class: "breached-color"});
   $div = $("<ul>", {id: email, class: "collapse list-group"});
   $parent.append($emailTitle, $div);
   $("#inject-here").append($parent);
