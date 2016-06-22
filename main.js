@@ -1,10 +1,10 @@
 var domain = "https://haveibeenpwned.com/api/v2/breachedaccount/"
-
+var injectedData = [];
 
 $("#execute-btn").click(function() {
   var emails = $("#user-input").val();
-  var emailsArr = emails.split(/[,\/-]|s+/);
   var emailsArr = emails.split(/[,\/-]|\s+/);
+  clearInjectedData();
   checkEmails(emailsArr);
 })
 
@@ -77,4 +77,10 @@ function buildScaffoldFor(website, domain, email) {
   $description = $("<p>", {class: "Description"});
   $listItem.append($title, $count, $description);
   $("#"+email).append($listItem);
+}
+
+function clearInjectedData() {
+  $("#inject-here > a").each(function(_, elem) {
+    elem.remove();
+  })
 }
