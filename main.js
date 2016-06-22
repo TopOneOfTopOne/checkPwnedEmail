@@ -56,7 +56,7 @@ function addHTML(data, email) {
 }
 
 function displayClean(email){
-  $parent = $("<a>", {class: "list-group-item disabled"});
+  $parent = $("<a>", {class: "list-group-item"});
   $emailTitle = $("<h4>", {text: email, class: "clean-color"});
   $parent.append($emailTitle);
   $("#inject-here").append($parent);
