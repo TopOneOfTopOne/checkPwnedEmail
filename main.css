@@ -1,3 +1,6 @@
+body {
+  background-color: #18bc9c;
+}
 .num-breach {
   color: red;
 }
@@ -9,4 +12,3 @@
 .breached-color {
   color:red
 }
-
