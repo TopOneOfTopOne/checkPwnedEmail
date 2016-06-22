@@ -3,7 +3,7 @@ var domain = "https://haveibeenpwned.com/api/v2/breachedaccount/"
 
 $("#execute-btn").click(function() {
   var emails = $("#user-input").val();
-  var emailsArr = emails.split(/[,\/ -]/);
+  var emailsArr = emails.split(/[,\/-]|s+/);
   checkEmails(emailsArr);
 })
 
