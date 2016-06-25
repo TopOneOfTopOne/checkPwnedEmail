@@ -13,7 +13,7 @@ function checkEmails(emailsArr) {
   var numClean = 0;
   $.each(emailsArr, function(_, email) {
     $.ajax({
-      url: "https://haveibeenpwned.com/api/v2/breachedaccount/"+email,
+      url: domain+email,
       success: function(json){
         addHTML(json, email);
         numBreached++;},
@@ -53,6 +53,8 @@ function addHTML(data, email) {
       }
     })
   })
+  var siteBreachCount = data.length;
+  $("#"+email+"siteBreachCount").append(siteBreachCount);
 }
 
 function displayClean(email){
@@ -65,8 +67,9 @@ function displayClean(email){
 function buildEmailItem(email, emailTitle) {
   $parent = $("<a>", {"data-toggle": "collapse", "data-target": "#"+email, class: "list-group-item"});
   $emailTitle = $("<h4>", {text: emailTitle, class: "breached-color"});
+  $label = $("<span>", {class: "label label-default label-pill pull-xs-right", id: email+"siteBreachCount"});
   $div = $("<ul>", {id: email, class: "collapse list-group"});
-  $parent.append($emailTitle, $div);
+  $parent.append($emailTitle, $div, $label);
   $("#inject-here").append($parent);
 }
 
