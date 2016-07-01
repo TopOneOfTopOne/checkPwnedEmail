@@ -58,24 +58,24 @@ function addHTML(data, email) {
 }
 
 function displayClean(email){
-  $parent = $("<a>", {class: "list-group-item"});
-  $emailTitle = $("<h4>", {text: email, class: "clean-color"});
+  $parent = $("<a>", {class: ""});
+  $emailTitle = $("<h4>", {text: email, class: "clean-color email-title"});
   $parent.append($emailTitle);
   $("#inject-here").append($parent);
 }
 
 function buildEmailItem(email, emailTitle) {
-  $parent = $("<a>", {"data-toggle": "collapse", "data-target": "#"+email, class: "list-group-item"});
-  $emailTitle = $("<h4>", {text: emailTitle, class: "breached-color"});
+  $parent = $("<a>", {"data-toggle": "collapse", "data-target": "#"+email, class: ""});
+  $emailTitle = $("<h4>", {text: emailTitle, class: "breached-color email-title"});
   $label = $("<span>", {class: "label label-default label-pill pull-right", id: email+"siteBreachCount"});
-  $div = $("<ul>", {id: email, class: "collapse list-group"});
+  $div = $("<ul>", {id: email, class: "collapse list"});
   $emailTitle.append($label)
   $parent.append($emailTitle, $div);
   $("#inject-here").append($parent);
 }
 
 function buildScaffoldFor(website, domain, email) {
-  $listItem = $("<li>", {class: "list-group-item " + website})
+  $listItem = $("<li>", {class: "" + website})
   $title = $("<a>", {class: "Title", href: "http://"+domain, target: "_blank"});
   $count = $("<p>", {class: "PwnCount num-breach", text: "# Breached accounts: "});
   $description = $("<p>", {class: "Description"});

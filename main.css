@@ -1,6 +1,26 @@
+/* General styling */
 body {
   background-color: #18bc9c;
 }
+
+h2 {
+  color: #fff;
+}
+
+a {
+  color: #128f76 !important;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+/* breached text colors */
 .num-breach {
   color: red;
 }
@@ -13,6 +33,22 @@ body {
   color:red
 }
 
-h2 {
-  color: #fff;
+/* list styling */
+.email-title {
+  padding: 10px;
+  padding-top: 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.email-title:hover {
+  background-color: #128f76;
+}
+
+.list {
+  color: #3be6c4 !important;
+}
+
+.list li>a {
+  font-size: 2em;
+  list-style-type: none;
 }
