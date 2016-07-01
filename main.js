@@ -67,9 +67,10 @@ function displayClean(email){
 function buildEmailItem(email, emailTitle) {
   $parent = $("<a>", {"data-toggle": "collapse", "data-target": "#"+email, class: "list-group-item"});
   $emailTitle = $("<h4>", {text: emailTitle, class: "breached-color"});
-  $label = $("<span>", {class: "label label-default label-pill pull-xs-right", id: email+"siteBreachCount"});
+  $label = $("<span>", {class: "label label-default label-pill pull-right", id: email+"siteBreachCount"});
   $div = $("<ul>", {id: email, class: "collapse list-group"});
-  $parent.append($emailTitle, $div, $label);
+  $emailTitle.append($label)
+  $parent.append($emailTitle, $div);
   $("#inject-here").append($parent);
 }
 
