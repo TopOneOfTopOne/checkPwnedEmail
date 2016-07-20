@@ -1,12 +1,14 @@
 var domain = "https://haveibeenpwned.com/api/v2/breachedaccount/"
 var injectedData = [];
 
+$("#modalIntroduction").modal();
+
 // if the execute button is clicked or user presses enter run the 
 // main function
 $("#execute-btn").click(main)
 $("body").keypress((event) => {
   if (event.which == 13) 
-	main()
+	main();
 })
 
 function main() {

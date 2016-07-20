@@ -20,6 +20,10 @@ ul {
   list-style-type: none;
 }
 
+body {
+  margin-bottom: 50px;
+}
+
 /* breached text colors */
 .num-breach {
   color: red;
@@ -51,3 +55,11 @@ ul {
   font-size: 2em;
   list-style-type: none;
 }
+
+
+/* footer */
+a.footer-link {
+  margin: 0.5em;
+  cursor: pointer
+}
+
