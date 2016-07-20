@@ -9,3 +9,4 @@ Check multiple emails to see if they are compromised.
 
 ## Major features to add
 * Uploading + downloading
+* Make mobile friendly
