@@ -1,9 +1,10 @@
 var domain = "https://haveibeenpwned.com/api/v2/breachedaccount/"
-
+var injectedData = [];
 
 $("#execute-btn").click(function() {
   var emails = $("#user-input").val();
-  var emailsArr = emails.split(/[,\/ -]/);
+  var emailsArr = emails.split(/[,\/-]|\s+/);
+  clearInjectedData();
   checkEmails(emailsArr);
 })
 
@@ -12,7 +13,7 @@ function checkEmails(emailsArr) {
   var numClean = 0;
   $.each(emailsArr, function(_, email) {
     $.ajax({
-      url: "https://haveibeenpwned.com/api/v2/breachedaccount/"+email,
+      url: domain+email,
       success: function(json){
         addHTML(json, email);
         numBreached++;},
@@ -52,28 +53,38 @@ function addHTML(data, email) {
       }
     })
   })
+  var siteBreachCount = data.length;
+  $("#"+email+"siteBreachCount").append(siteBreachCount);
 }
 
 function displayClean(email){
-  $parent = $("<a>", {class: "list-group-item disabled"});
-  $emailTitle = $("<h4>", {text: email, class: "clean-color"});
+  $parent = $("<a>", {class: ""});
+  $emailTitle = $("<h4>", {text: email, class: "clean-color email-title"});
   $parent.append($emailTitle);
   $("#inject-here").append($parent);
 }
 
 function buildEmailItem(email, emailTitle) {
-  $parent = $("<a>", {"data-toggle": "collapse", "data-target": "#"+email, class: "list-group-item"});
-  $emailTitle = $("<h4>", {text: emailTitle, class: "breached-color"});
-  $div = $("<ul>", {id: email, class: "collapse list-group"});
+  $parent = $("<a>", {"data-toggle": "collapse", "data-target": "#"+email, class: ""});
+  $emailTitle = $("<h4>", {text: emailTitle, class: "breached-color email-title"});
+  $label = $("<span>", {class: "label label-default label-pill pull-right", id: email+"siteBreachCount"});
+  $div = $("<ul>", {id: email, class: "collapse list"});
+  $emailTitle.append($label)
   $parent.append($emailTitle, $div);
   $("#inject-here").append($parent);
 }
 
 function buildScaffoldFor(website, domain, email) {
-  $listItem = $("<li>", {class: "list-group-item " + website})
+  $listItem = $("<li>", {class: "" + website})
   $title = $("<a>", {class: "Title", href: "http://"+domain, target: "_blank"});
   $count = $("<p>", {class: "PwnCount num-breach", text: "# Breached accounts: "});
   $description = $("<p>", {class: "Description"});
   $listItem.append($title, $count, $description);
   $("#"+email).append($listItem);
+}
+
+function clearInjectedData() {
+  $("#inject-here > a").each(function(_, elem) {
+    elem.remove();
+  })
 }
