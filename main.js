@@ -36,7 +36,7 @@ function checkEmails(emailsArr) {
 function displayNumbers(numBreached, numClean) {
   $numBreached = $("<small>", {text: "Breached: "+numBreached, class: "breached-color"});
   $numClean = $("<small>", {text: "Clean: "+numClean, class: "clean-color"});
-  $("#title-for-output").append(" ", $numBreached, " ", $numClean);
+  $("#statistics").append(" ", $numBreached, " ", $numClean);
 }
 
 function addHTML(data, email) {
@@ -84,7 +84,6 @@ function buildScaffoldFor(website, domain, email) {
 }
 
 function clearInjectedData() {
-  $("#inject-here > a").each(function(_, elem) {
-    elem.remove();
-  })
+  $("#inject-here").empty();
+  $("#statistics").empty();
 }
